@@ -1,13 +1,13 @@
 import { Link, Outlet } from '@tanstack/react-router';
 import { RequireAuth } from './core/auth/RequireAuth';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth } from './app/hooks/useAuth';
 
 export function Layout() {
-  const { logout } = useAuth0();
+  const { logout } = useAuth();
   return (
     <main>
-      <aside>
-        <RequireAuth>
+      <RequireAuth>
+        <aside>
           <nav className="flex items-center justify-between p-2">
             <div className="flex gap-2">
               <Link to="/" className="[&.active]:font-bold">
@@ -21,20 +21,12 @@ export function Layout() {
               </Link>
             </div>
             <div>
-              <button
-                onClick={() =>
-                  logout({
-                    logoutParams: { returnTo: window.location.origin },
-                  })
-                }
-              >
-                Log Out
-              </button>
+              <button onClick={() => logout()}>Log Out</button>
             </div>
           </nav>
-        </RequireAuth>
-        <hr />
-      </aside>
+          <hr />
+        </aside>
+      </RequireAuth>
       <section>
         <Outlet />
       </section>

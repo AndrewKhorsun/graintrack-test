@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Auth0Provider } from '@auth0/auth0-react';
-import './index.css';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-
-// Import the generated route tree
 import { routeTree } from './routeTree.gen';
+import { AuthProvider } from './core/context/AuthContext';
+import './index.css';
 
-// Create a new router instance
 const router = createRouter({ routeTree });
 declare module '@tanstack/react-router' {
   interface Register {
@@ -17,14 +14,8 @@ declare module '@tanstack/react-router' {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Auth0Provider
-      domain={import.meta.env.VITE_APP_AUTH0_DOMAIN}
-      clientId={import.meta.env.VITE_APP_AUTH0_CLIENT_ID}
-      authorizationParams={{
-        redirect_uri: 'http://localhost:5173',
-      }}
-    >
+    <AuthProvider>
       <RouterProvider router={router} />
-    </Auth0Provider>
+    </AuthProvider>
   </React.StrictMode>,
 );

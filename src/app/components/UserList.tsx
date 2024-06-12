@@ -1,6 +1,7 @@
 // UserList.tsx
 import { useEffect, useState } from 'react';
-import { User, getUsersAndTodos } from '../services/ApiService';
+import {  getUsersAndTodos } from '../services/ApiService';
+import { User } from '../../types/services';
 
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
