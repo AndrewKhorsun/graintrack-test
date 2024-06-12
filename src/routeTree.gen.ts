@@ -19,8 +19,7 @@ import { Route as rootRoute } from './routes/__root'
 const LoginLazyImport = createFileRoute('/login')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
-const TodoIndexLazyImport = createFileRoute('/todo/')()
-const TodoTodoIdLazyImport = createFileRoute('/todo/$todoId')()
+const UsersIndexLazyImport = createFileRoute('/users/')()
 
 // Create/Update Routes
 
@@ -39,15 +38,10 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const TodoIndexLazyRoute = TodoIndexLazyImport.update({
-  path: '/todo/',
+const UsersIndexLazyRoute = UsersIndexLazyImport.update({
+  path: '/users/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/todo/index.lazy').then((d) => d.Route))
-
-const TodoTodoIdLazyRoute = TodoTodoIdLazyImport.update({
-  path: '/todo/$todoId',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/todo/$todoId.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/users/index.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -74,18 +68,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
     }
-    '/todo/$todoId': {
-      id: '/todo/$todoId'
-      path: '/todo/$todoId'
-      fullPath: '/todo/$todoId'
-      preLoaderRoute: typeof TodoTodoIdLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/todo/': {
-      id: '/todo/'
-      path: '/todo'
-      fullPath: '/todo'
-      preLoaderRoute: typeof TodoIndexLazyImport
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -97,8 +84,7 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   AboutLazyRoute,
   LoginLazyRoute,
-  TodoTodoIdLazyRoute,
-  TodoIndexLazyRoute,
+  UsersIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -112,8 +98,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/about",
         "/login",
-        "/todo/$todoId",
-        "/todo/"
+        "/users/"
       ]
     },
     "/": {
@@ -125,11 +110,8 @@ export const routeTree = rootRoute.addChildren({
     "/login": {
       "filePath": "login.lazy.tsx"
     },
-    "/todo/$todoId": {
-      "filePath": "todo/$todoId.lazy.tsx"
-    },
-    "/todo/": {
-      "filePath": "todo/index.lazy.tsx"
+    "/users/": {
+      "filePath": "users/index.lazy.tsx"
     }
   }
 }
