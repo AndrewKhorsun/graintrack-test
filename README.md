@@ -1,3 +1,5 @@
+## [Link to the app](https://andrewkhorsun.github.io/)
+
 # Graintrack Test Project
 
 This project is a test setup using Vite, React, TypeScript, and various other tools and libraries to provide a modern development environment.
