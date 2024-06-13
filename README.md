@@ -1,4 +1,4 @@
-## [Link to the app](https://andrewkhorsun.github.io/)
+## [Link to the app](https://andrewkhorsun.github.io/graintrack-test/)
 
 # Graintrack Test Project
 
