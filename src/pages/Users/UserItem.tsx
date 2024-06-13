@@ -1,4 +1,4 @@
-import { User } from '../../app/services/ApiService';
+import { User } from "../../types/services";
 
 interface Props {
   user: User;
