@@ -1,15 +1,16 @@
-import { useLocation, useNavigate } from '@tanstack/react-router';
-import { useAuth } from '../app/hooks/useAuth';
+import { Navigate, useNavigate } from '@tanstack/react-router';
+import { useCustomContext } from '../app/hooks/useCustomContext';
 import { useState } from 'react';
 
 export const Login = () => {
-  const { login } = useAuth();
+  const { login, loggedIn } = useCustomContext().authorization;
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const location = useLocation();
-  console.log('location', location);
-  console.log('navigate', navigate);
+
+  if (loggedIn) {
+    return <Navigate to="/" />;
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

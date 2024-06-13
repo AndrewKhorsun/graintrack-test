@@ -9,7 +9,7 @@ export const getUsers = (): Observable<User[]> => {
         subscriber.next(data);
         subscriber.complete();
       })
-      .catch(error => subscriber.error(error));
+      .catch(error => subscriber.error(error)); 
   });
 };
 

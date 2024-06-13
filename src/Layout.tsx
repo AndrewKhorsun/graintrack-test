@@ -1,9 +1,9 @@
 import { Link, Outlet } from '@tanstack/react-router';
 import { RequireAuth } from './core/auth/RequireAuth';
-import { useAuth } from './app/hooks/useAuth';
+import { useCustomContext } from './app/hooks/useCustomContext';
 
 export function Layout() {
-  const { logout } = useAuth();
+  const { logout } = useCustomContext().authorization;
   return (
     <main>
       <RequireAuth>

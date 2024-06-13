@@ -1,4 +1,4 @@
-import UserList from "../../app/components/UserList";
+import UserList from "../../app/components/UsersList";
 
 
 export function Users() {

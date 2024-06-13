@@ -1,29 +1,38 @@
 import { createContext, useState, ReactNode } from 'react';
+import { User } from '../../types/services';
+import { getUsersAndTodos } from '../../app/services/ApiService';
 
-export interface AuthContextType {
-  loggedIn: boolean;
-  login: () => void;
-  logout: () => void;
+export interface ContextType {
+  authorization: {
+    loggedIn: boolean;
+    login: () => void;
+    logout: () => void;
+  };
+  users: {
+    usersData: User[] | null;
+    getUsersData: () => void;
+  };
 }
 
 interface Props {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
-);
+export const Context = createContext<ContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: Props) => {
+export const ContextProvider = ({ children }: Props) => {
   const isLoggedSS: boolean = JSON.parse(
     sessionStorage.getItem('isLogged') ?? 'false',
   );
 
   const [loggedIn, setLoggedIn] = useState(isLoggedSS);
+  const [usersData, setUsersData] = useState<User[] | null>(null);
 
   const login = () => {
     sessionStorage.setItem('isLogged', 'true');
     setLoggedIn(true);
+
+    getUsersData();
   };
 
   const logout = () => {
@@ -31,9 +40,20 @@ export const AuthProvider = ({ children }: Props) => {
     setLoggedIn(false);
   };
 
+  const getUsersData = () => {
+    getUsersAndTodos().subscribe(data => {
+      setUsersData(data);
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout }}>
+    <Context.Provider
+      value={{
+        authorization: { loggedIn, login, logout },
+        users: { usersData, getUsersData },
+      }}
+    >
       {children}
-    </AuthContext.Provider>
+    </Context.Provider>
   );
 };
